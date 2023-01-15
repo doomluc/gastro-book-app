@@ -1,44 +1,15 @@
 import { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {Canvas, useFrame, useThree} from "@react-three/fiber";
-import { DragControls } from 'three/examples/jsm/controls/DragControls'
-import { extend } from '@react-three/fiber'
-extend({ DragControls })
+import Draggable from 'react-native-draggable';
 
-
-
-
-function Box(props) {
-  // This reference will give us direct access to the mesh
-  const mesh = useRef();
-  const { camera, gl } = useThree();
-
-
-  return (
-    <mesh
-      {...props}
-      ref={mesh}
-    >
-      <boxGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshStandardMaterial
-        attach="material"
-        color={"orange"}
-      />
-        <dragControls ref={mesh} args={[[mesh.current], camera, gl.domElement]} />
-
-    </mesh>
-  );
-}
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
-      </Canvas>
+        <Draggable x={75} y={100} renderSize={56} renderColor='blue' renderText='A' isCircle shouldReverse onShortPressRelease={()=>alert('touched!!')}/>
+        <Draggable x={200} y={300} renderColor='red' renderText='B'/>
+        <Draggable x={50} y={50}>
+        </Draggable>
     </View>
   );
 }
